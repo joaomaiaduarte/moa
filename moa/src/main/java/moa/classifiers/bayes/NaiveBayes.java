@@ -130,7 +130,9 @@ public class NaiveBayes extends AbstractClassifier {
     public static double[] doNaiveBayesPrediction(Instance inst,
             DoubleVector observedClassDistribution,
             AutoExpandVector<AttributeClassObserver> attributeObservers) {
-        double[] votes = new double[observedClassDistribution.numValues()];
+        //double[] votes = new double[observedClassDistribution.numValues()];
+        double[] votes = new double[inst.numClasses()];
+        
         double observedClassSum = observedClassDistribution.sumOfValues();
         for (int classIndex = 0; classIndex < votes.length; classIndex++) {
             votes[classIndex] = observedClassDistribution.getValue(classIndex)
@@ -153,7 +155,10 @@ public class NaiveBayes extends AbstractClassifier {
             DoubleVector observedClassDistribution,
             AutoExpandVector<AttributeClassObserver> observers, AutoExpandVector<AttributeClassObserver> observers2) {
         AttributeClassObserver obs;
+        
         double[] votes = new double[observedClassDistribution.numValues()];
+       
+        
         double observedClassSum = observedClassDistribution.sumOfValues();
         for (int classIndex = 0; classIndex < votes.length; classIndex++) {
             votes[classIndex] = Math.log10(observedClassDistribution.getValue(classIndex)

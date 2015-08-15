@@ -127,7 +127,9 @@ public class MultilabelWindowClassificationPerformanceEvaluator extends WindowCl
 					System.exit(1);
 				}
 				for (int i = 0; i< prediction.size();i++){
-					result[i] = prediction.getVote(i,1); 
+					
+					result[i] = prediction.getVote(i,0);
+					//result[i] = prediction.getVote(i,1); 
 				}
 			}
 			addResult(example, result);
