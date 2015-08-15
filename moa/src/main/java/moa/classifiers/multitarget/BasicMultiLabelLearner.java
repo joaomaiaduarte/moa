@@ -160,7 +160,6 @@ public class BasicMultiLabelLearner extends AbstractMultiLabelLearner{
 		Prediction prediction=null;
         
 		double [] votes= new double[instance.numClasses()];
-		//double [] votes= new double[2];
         double vote;
 		
 		
