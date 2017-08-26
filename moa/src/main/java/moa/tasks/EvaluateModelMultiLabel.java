@@ -26,6 +26,7 @@ import java.io.PrintStream;
 import com.github.javacliparser.FileOption;
 import com.github.javacliparser.IntOption;
 import com.yahoo.labs.samoa.instances.Instance;
+import com.yahoo.labs.samoa.instances.Prediction;
 
 import moa.classifiers.Classifier;
 import moa.classifiers.MultiLabelClassifier;
@@ -65,8 +66,8 @@ public class EvaluateModelMultiLabel extends MultiLabelMainTask {
 
     public ClassOption evaluatorOption = new ClassOption("evaluator", 'e',
             "Classification performance evaluation method.",
-            MultiLabelPerformanceEvaluator.class,
-            "MultilabelWindowClassificationPerformanceEvaluator");
+            MultiTargetPerformanceEvaluator.class,
+            "BasicMultiLabelPerformanceEvaluator");
 
 
     public IntOption maxInstancesOption = new IntOption("maxInstances", 'i',

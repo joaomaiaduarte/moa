@@ -30,6 +30,7 @@ import moa.classifiers.rules.core.anomalydetection.OddsRatioScore;
 import moa.classifiers.rules.featureranking.FeatureRanking;
 import moa.classifiers.rules.featureranking.NoFeatureRanking;
 import moa.classifiers.rules.featureranking.messages.ChangeDetectedMessage;
+import moa.classifiers.rules.functions.Perceptron;
 import moa.classifiers.rules.multilabel.attributeclassobservers.NominalStatisticsObserver;
 import moa.classifiers.rules.multilabel.attributeclassobservers.NumericStatisticsObserver;
 import moa.classifiers.rules.multilabel.core.MultiLabelRule;
@@ -96,7 +97,10 @@ public abstract class AMRulesMultiLabelLearner extends AbstractMultiLabelLearner
 	public FlagOption dropOldRuleAfterExpansionOption = new FlagOption("dropOldRuleAfterExpansion", 'D',
 			"Drop old rule if it expanded (by default the rule is kept for the set of outputs not selected for expansion.)");
 
-	public ClassOption changeDetector;
+	public ClassOption changeDetector = new ClassOption("changeDetector",
+			'H', "Change Detector.", 
+			ChangeDetector.class,
+			"PageHinkleyDM -d 0.05 -l 35.0");
 
 	public ClassOption anomalyDetector = new ClassOption("anomalyDetector",
 			'A', "Anomaly Detector.", 
@@ -174,8 +178,16 @@ public abstract class AMRulesMultiLabelLearner extends AbstractMultiLabelLearner
 	@Override
 	public Prediction getPredictionForInstance(MultiLabelInstance inst) {
 		ErrorWeightedVoteMultiLabel vote=getVotes(inst);
-		if(vote!=null)	
-			return vote.getPrediction();
+
+		Prediction pred=vote.getPrediction();
+		if(vote!=null) {
+			if ( (MultiLabelLearner) getPreparedClassOption(this.learnerOption) instanceof moa.classifiers.rules.multilabel.functions.MultiLabelPerceptronClassification ) {
+				for(int i=0; i<pred.size() ; i++){
+					pred.setVote(i,0, pred.getVote(i,0) < 0.5 ? 1:0  );
+				}
+			}
+			return pred;
+		}
 		else
 			return null;
 	}

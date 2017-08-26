@@ -131,6 +131,12 @@ public class MultiLabelRule extends ObservableMOAObject {
 		return learningLiteral.getPredictionForInstance(instance);
 	}
 
+        public double getAnomalyScore(){
+            //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            //System.out.print("MultiLabelRule.getAnomalyScore:AScore=" + this.learningLiteral.anomalyDetector.getAnomalyScore() + "\n");
+            //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
+            return  this.learningLiteral.anomalyDetector.getAnomalyScore();
+        }
 	public boolean tryToExpand(double splitConfidence, double tieThresholdOption) {
 		boolean hasExpanded=learningLiteral.tryToExpand(splitConfidence,tieThresholdOption);
 		
